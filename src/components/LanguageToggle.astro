@@ -1,0 +1,48 @@
+---
+import { getLangFromUrl, getLocalePaths } from "../i18n/utils";
+import { languages } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const paths = getLocalePaths(Astro.url);
+---
+
+<nav class="flex items-center gap-2 font-mono text-xs" aria-label={languages[lang]}>
+  <a
+    href={paths.en}
+    data-set-lang="en"
+    hreflang="en"
+    aria-current={lang === "en" ? "true" : undefined}
+    class:list={[
+      "tracking-widest transition-colors",
+      lang === "en" ? "text-ink" : "text-faint hover:text-muted",
+    ]}>EN</a
+  >
+  <span class="text-faint">/</span>
+  <a
+    href={paths.es}
+    data-set-lang="es"
+    hreflang="es"
+    aria-current={lang === "es" ? "true" : undefined}
+    class:list={[
+      "tracking-widest transition-colors",
+      lang === "es" ? "text-ink" : "text-faint hover:text-muted",
+    ]}>ES</a
+  >
+</nav>
+
+<script>
+  // Persist the user's manual choice so the auto-detect (BaseLayout) won't override it.
+  function bindLangToggle() {
+    document.querySelectorAll<HTMLAnchorElement>("[data-set-lang]").forEach((el) => {
+      el.addEventListener("click", () => {
+        try {
+          localStorage.setItem("preferred-lang", el.dataset.setLang ?? "en");
+        } catch {
+          /* ignore storage errors */
+        }
+      });
+    });
+  }
+  bindLangToggle();
+  document.addEventListener("astro:page-load", bindLangToggle);
+</script>

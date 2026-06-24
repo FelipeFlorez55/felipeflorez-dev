@@ -35,6 +35,9 @@ production AI experience and makes an AI engineer want to follow the weekly buil
 ## Cross-cutting requirements
 
 - **Aesthetic:** dark precision / editorial — generous whitespace, restrained motion.
+- **i18n:** every section ships in **English (default, `/`) and Spanish (`/es/`)**.
+  Copy lives in `src/i18n/ui.ts`; never hardcode user-facing strings in components.
+  Language auto-detects on first visit and is switchable via the persisted toggle.
 - **Motion:** GSAP + Lenis; `transform`/`opacity` only; reduced-motion safe.
 - **Navigation:** native Astro View Transitions between home and `/projects/<slug>`.
 - **Data:** projects bento is driven by `src/data/projects.ts`.

@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import { getLangFromUrl, useTranslations, getLocalePaths } from "../i18n/utils";
 import "../styles/global.css";
 
 interface Props {
@@ -9,18 +10,26 @@ interface Props {
   ogImage?: string;
 }
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const {
-  title = "Felipe Florez — AI Engineer",
-  description = "AI Engineer building agent & LLM systems in production on AWS.",
+  title = t("meta.title"),
+  description = t("meta.description"),
   ogImage = "/og/default.png",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
+
+// hreflang alternates for the current page in each locale.
+const paths = getLocalePaths(Astro.url);
+const enUrl = new URL(paths.en, Astro.site).href;
+const esUrl = new URL(paths.es, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,8 +41,14 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    <!-- Localization -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === "es" ? "es_ES" : "en_US"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -44,6 +59,35 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <!--
+      First-visit language detection (static-host friendly): a manual choice
+      (localStorage 'preferred-lang') always wins; otherwise fall back to the
+      browser language. Runs before paint. Upgrade path: a CloudFront viewer-request
+      function for header-based redirects without any flash (see docs/deployment.md).
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var p = location.pathname;
+          var onEs = p === "/es" || p.slice(0, 4) === "/es/";
+          var cur = onEs ? "es" : "en";
+          var stored = localStorage.getItem("preferred-lang");
+          var want =
+            stored ||
+            ((navigator.language || "en").toLowerCase().indexOf("es") === 0
+              ? "es"
+              : "en");
+          if (want !== "en" && want !== "es") want = "en";
+          if (want === cur) return;
+          var base = onEs ? p.slice(3) || "/" : p;
+          var dest = want === "es" ? "/es" + (base === "/" ? "/" : base) : base;
+          if (dest !== p) location.replace(dest + location.search + location.hash);
+        } catch (e) {
+          /* no-op */
+        }
+      })();
+    </script>
 
     <!-- Native Astro View Transitions for in-site navigation -->
     <ClientRouter />

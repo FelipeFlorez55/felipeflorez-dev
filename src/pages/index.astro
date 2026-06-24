@@ -1,21 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-// Placeholder only. Sections are built from specs/ — see specs/landing.md.
-// First spec to implement: hero + metrics bar.
+import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout>
-  <main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6">
-    <p class="font-mono text-sm tracking-widest text-faint uppercase">
-      felipeflorez.dev
-    </p>
-    <h1 class="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-      Felipe Florez — AI Engineer
-    </h1>
-    <p class="mt-4 max-w-prose text-lg text-muted">
-      Agent &amp; LLM systems in production on AWS. Site under construction —
-      built section by section with Spec-Driven Development.
-    </p>
-  </main>
+  <ComingSoon />
 </BaseLayout>

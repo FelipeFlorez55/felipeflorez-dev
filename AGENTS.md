@@ -32,6 +32,8 @@
   strong typographic hierarchy.
 - Projects layout: **bento grid, filterable by category**, sourced from
   `src/data/projects.ts`.
+- **i18n: English (default, `/`) + Spanish (`/es/`)** via Astro's native i18n. Browser
+  language auto-detect on first visit + a persisted manual toggle. See below.
 - Hosting: **AWS S3 (private) + CloudFront (OAC)**, ACM wildcard `*.felipeflorez.dev`
   (us-east-1), deploy via **GitHub Actions + OIDC**. See [docs/deployment.md](docs/deployment.md).
 
@@ -63,9 +65,10 @@
 └── src/
     ├── components/       # Reusable UI. Build from specs; keep sections composable.
     ├── data/            # Typed data sources. projects.ts = bento + case studies.
-    ├── layouts/         # BaseLayout.astro (head, OG, View Transitions).
+    ├── i18n/            # ui.ts (en/es strings) + utils (getLangFromUrl, useTranslations).
+    ├── layouts/         # BaseLayout.astro (head, OG, hreflang, View Transitions).
     ├── lib/             # Framework-agnostic helpers (cn(), etc.).
-    ├── pages/           # Routes. projects/<slug>.astro = case studies.
+    ├── pages/           # Routes. en at /, es under es/. projects/<slug> = case studies.
     └── styles/          # global.css (Tailwind import + @theme design tokens).
 ```
 
@@ -78,6 +81,22 @@
   hex/oklch in components.
 - Components are presentational; content/data lives in `src/data/` or page frontmatter.
 - Keep sections independently composable so the landing can be reordered.
+
+## Internationalization (i18n)
+
+- **English is the default**, served at `/`. **Spanish** is served at `/es/`
+  (`prefixDefaultLocale: false` in `astro.config.mjs`).
+- Strings live in `src/i18n/ui.ts` (keep `en` and `es` keys in sync; `en` is the
+  fallback). Resolve copy with `useTranslations(getLangFromUrl(Astro.url))`.
+- Add every new page in both locales (`src/pages/foo.astro` + `src/pages/es/foo.astro`),
+  or factor shared markup into a component that reads the locale from the URL (see
+  `ComingSoon.astro`).
+- **Language selection:** a manual toggle (`LanguageToggle.astro`) persists the choice
+  in `localStorage('preferred-lang')`. On first visit with no stored choice, a tiny
+  inline script in `BaseLayout` redirects by `navigator.language`. Manual choice always
+  wins. `BaseLayout` emits `hreflang` alternates.
+- Static-host note: detection is client-side. Upgrade path is a CloudFront
+  viewer-request function for flash-free, header-based redirects (see docs/deployment.md).
 
 ## Commit conventions
 
