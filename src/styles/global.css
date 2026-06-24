@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — "dark precision / editorial".
+ * Foundation only: palette, type, radii, easing. No component/section styles yet.
+ * Sections are built from specs/ (see specs/landing.md).
+ */
+@theme {
+  /* Surfaces (near-black, layered) */
+  --color-bg: oklch(0.16 0.006 270);
+  --color-surface: oklch(0.20 0.007 270);
+  --color-elevated: oklch(0.24 0.008 270);
+  --color-border: oklch(0.30 0.008 270);
+
+  /* Ink */
+  --color-ink: oklch(0.96 0.004 270);
+  --color-muted: oklch(0.72 0.006 270);
+  --color-faint: oklch(0.55 0.006 270);
+
+  /* Accent (restrained, single hue) */
+  --color-accent: oklch(0.78 0.13 196);
+  --color-accent-ink: oklch(0.18 0.02 196);
+
+  /* Type — system stacks now; swap for a variable display/text pair via a spec later */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  /* Editorial rhythm */
+  --radius-card: 1rem;
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Smooth scroll is driven by Lenis (JS); keep native off to avoid conflicts. */
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Hard rule: animate only transform/opacity. Respect reduced motion globally. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

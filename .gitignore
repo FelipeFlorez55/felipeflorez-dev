@@ -1,0 +1,45 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables & secrets — NEVER commit any of these
+.env
+.env.*
+!.env.example
+*.local
+.envrc
+.direnv/
+
+# credentials / keys (defense in depth — see CLAUDE.md hard rules)
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+credentials
+aws-exports.js
+
+# local deploy config — real AWS account/bucket/dist values live here (NEVER commit)
+scripts/deploy.env
+*.deploy.env
+
+# macOS / editors
+.DS_Store
+.idea/
+*.swp
+
+# misc
+*.tsbuildinfo
+
+# stray personal media at repo root — move into public/ or src/assets/ when actually used
+/felipe-florez.png
