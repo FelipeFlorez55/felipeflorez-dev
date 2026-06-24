@@ -87,6 +87,13 @@ export const ui = {
     // Status
     "status.live": "Live",
     "status.wip": "WIP",
+
+    // Certifications
+    "cert.eyebrow": "Certifications",
+    "cert.heading": "Credentials",
+    "cert.inProgress": "In progress",
+    "cert.educationLabel": "Education",
+    "cert.degree": "B.S. in Electronic Engineering",
   },
   es: {
     "meta.title": "Felipe Florez, Ingeniero de IA",
@@ -166,6 +173,13 @@ export const ui = {
     // Status
     "status.live": "En vivo",
     "status.wip": "En curso",
+
+    // Certifications
+    "cert.eyebrow": "Certificaciones",
+    "cert.heading": "Credenciales",
+    "cert.inProgress": "En curso",
+    "cert.educationLabel": "Educación",
+    "cert.degree": "Ingeniería Electrónica (Pregrado)",
   },
 } as const;
 

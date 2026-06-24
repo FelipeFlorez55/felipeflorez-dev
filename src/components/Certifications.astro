@@ -1,0 +1,70 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { certifications } from "../data/certifications";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const school = "Universidad de Antioquia · Medellín";
+const period = "2017 – 2024";
+---
+
+<section
+  id="certifications"
+  class="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 sm:py-28"
+>
+  <p
+    data-reveal
+    class="font-mono text-xs tracking-widest text-accent uppercase"
+  >
+    {t("cert.eyebrow")}
+  </p>
+  <h2
+    data-reveal
+    class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+  >
+    {t("cert.heading")}
+  </h2>
+
+  <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      certifications.map((c) => (
+        <li
+          data-reveal
+          class="flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-5"
+        >
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-mono text-xs tracking-widest text-accent uppercase">
+              {c.issuer}
+            </span>
+            {c.inProgress && (
+              <span class="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] tracking-widest text-faint uppercase">
+                {t("cert.inProgress")}
+              </span>
+            )}
+          </div>
+          <h3 class="mt-3 text-base font-medium text-ink text-pretty">
+            {c.name}
+          </h3>
+          {c.code && <p class="mt-1 font-mono text-xs text-faint">{c.code}</p>}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div
+    data-reveal
+    class="mt-10 flex flex-col gap-2 border-t border-border/60 pt-8 sm:flex-row sm:items-baseline sm:justify-between"
+  >
+    <div>
+      <p class="font-mono text-xs tracking-widest text-faint uppercase">
+        {t("cert.educationLabel")}
+      </p>
+      <p class="mt-2 font-medium text-ink">{t("cert.degree")}</p>
+      <p class="text-sm text-muted">{school}</p>
+    </div>
+    <p class="font-mono text-xs tracking-widest text-faint uppercase">
+      {period}
+    </p>
+  </div>
+</section>

@@ -4,7 +4,7 @@
 > intent of every block on the home page. Each section gets its own detailed spec in
 > `specs/sections/<name>.md` (created when we build it), using `_template.md`.
 
-- **Status:** in progress — Hero, Metrics, About, Skills, Experience, Projects built; How-I-build / Content / Certifications / Contact planned
+- **Status:** in progress — Hero, Metrics, About, Skills, Experience, Projects, Certifications built; How-I-build / Content / Contact planned
 - **Last updated:** 2026-06-24
 
 ## Goal
@@ -29,7 +29,7 @@ production AI experience and makes an AI engineer want to follow the weekly buil
 | 6   | **Projects (bento)** | Filterable bento grid of weekend builds; the signature section         | both             | ✅ built | `specs/sections/projects.md` |
 | 7   | **How I build / SDD**| The Spec-Driven Development process; why the work is trustworthy        | both             | planned  | `specs/sections/how-i-build.md` |
 | 8   | **Content / links**  | Writing, talks, socials, build-in-public cadence                       | community        | planned  | `specs/sections/content.md` |
-| 9   | **Certifications**   | Credentials (AWS, etc.)                                                | recruiters       | planned  | `specs/sections/certifications.md` |
+| 9   | **Certifications**   | Credentials (AWS, etc.)                                                | recruiters       | ✅ built | `specs/sections/certifications.md` |
 | 10  | **Contact**          | Low-friction way to reach out / hire                                   | recruiters       | planned  | `specs/sections/contact.md` |
 
 ## Cross-cutting requirements
