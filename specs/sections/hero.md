@@ -24,7 +24,10 @@ certified." Community: "this person builds real agent/LLM systems — worth foll
 - Heading (ES): "Construyo sistemas de agentes y LLM que viven en producción."
 - Subcopy: orchestration, RAG, secure tool execution on AWS + eval/observability/cost
   control at scale.
-- CTAs: primary "Get in touch" (mailto), secondary "Download CV" (`/felipe-florez-cv.pdf`).
+- CTAs: primary "Get in touch" → **LinkedIn** (neutral/professional, low-signal — not a
+  "hire me" mailto), secondary "Download CV" (`/felipe-florez-cv.pdf`). Email stays in
+  the footer for direct contact. Copy is deliberately neutral — no "open to work" wording
+  (Felipe is employed; the goal is to be reachable without signaling active job-seeking).
 - Portrait: `src/assets/felipe-florez.png` via `astro:assets` `<Image>`.
 
 **Metrics bar (proof)** — `src/data/metrics.ts`
@@ -63,5 +66,5 @@ CV download until a contact section exists.
 
 ## 8. Open questions
 
-- Confirm public contact email (CV lists `pipeflorez_99@hotmail.com`).
-- Preferred primary CTA target long-term (contact section vs LinkedIn vs mailto).
+- Resolved: primary CTA → LinkedIn; email (`pipeflorez_99@hotmail.com`) in footer; copy
+  kept neutral (no job-seeking signal).

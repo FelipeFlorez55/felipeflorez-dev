@@ -5,7 +5,9 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const contactEmail = "pipeflorez_99@hotmail.com";
+// Primary contact is LinkedIn (neutral, professional, low-signal). Email lives in the
+// footer for those who prefer direct. Keep CTA copy neutral — no "open to work" language.
+const linkedin = "https://www.linkedin.com/in/andres-felipe-florez-gil";
 ---
 
 <section class="mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28">
@@ -31,7 +33,9 @@ const contactEmail = "pipeflorez_99@hotmail.com";
       </p>
       <div data-hero-item class="mt-9 flex flex-wrap items-center gap-4">
         <a
-          href={`mailto:${contactEmail}`}
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
           class="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5"
         >
           {t("hero.cta.primary")}
