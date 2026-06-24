@@ -1,0 +1,47 @@
+---
+import { getLangFromUrl, useTranslations, pick } from "../i18n/utils";
+import { skillGroups } from "../data/skills";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section
+  id="skills"
+  class="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 sm:py-28"
+>
+  <p
+    data-reveal
+    class="font-mono text-xs tracking-widest text-accent uppercase"
+  >
+    {t("skills.eyebrow")}
+  </p>
+  <h2
+    data-reveal
+    class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+  >
+    {t("skills.heading")}
+  </h2>
+
+  <div class="mt-12 grid gap-5 sm:grid-cols-2">
+    {
+      skillGroups.map((group) => (
+        <div
+          data-reveal
+          class="rounded-2xl border border-border bg-surface/40 p-6"
+        >
+          <h3 class="text-sm font-medium tracking-wide text-ink">
+            {pick(group.title, lang)}
+          </h3>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <li class="rounded-full border border-border/70 bg-elevated/40 px-3 py-1 font-mono text-xs text-muted">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>

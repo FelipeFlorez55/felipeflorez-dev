@@ -1,0 +1,55 @@
+---
+import { getLangFromUrl, useTranslations, pick } from "../i18n/utils";
+import { experience } from "../data/experience";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section
+  id="experience"
+  class="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 sm:py-28"
+>
+  <p
+    data-reveal
+    class="font-mono text-xs tracking-widest text-accent uppercase"
+  >
+    {t("experience.eyebrow")}
+  </p>
+  <h2
+    data-reveal
+    class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+  >
+    {t("experience.heading")}
+  </h2>
+
+  <ol class="mt-12">
+    {
+      experience.map((job) => (
+        <li
+          data-reveal
+          class="grid gap-3 border-t border-border/60 py-8 lg:grid-cols-[1fr_2.4fr] lg:gap-10"
+        >
+          <div>
+            <p class="font-mono text-xs tracking-widest text-faint uppercase">
+              {pick(job.period, lang)}
+            </p>
+            <p class="mt-1 text-xs text-faint">{pick(job.location, lang)}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-medium text-ink">{pick(job.role, lang)}</h3>
+            <p class="text-sm text-accent">{job.company}</p>
+            <ul class="mt-4 space-y-2.5 text-muted">
+              {pick(job.highlights, lang).map((h) => (
+                <li class="flex gap-3 text-pretty">
+                  <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-faint" />
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

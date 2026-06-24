@@ -51,10 +51,24 @@ function scrollReveals() {
   });
 }
 
+function bindAnchors() {
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (!href || href === "#") return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      lenis?.scrollTo(target as HTMLElement, { offset: -64 });
+    });
+  });
+}
+
 function setup() {
   try {
-    if (prefersReduced()) return; // leave everything visible & static
+    if (prefersReduced()) return; // leave everything visible & static (native anchors + scroll-mt)
     initLenis();
+    bindAnchors();
     ScrollTrigger.getAll().forEach((t) => t.kill());
     heroIntro();
     scrollReveals();

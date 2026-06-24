@@ -4,7 +4,7 @@
 > intent of every block on the home page. Each section gets its own detailed spec in
 > `specs/sections/<name>.md` (created when we build it), using `_template.md`.
 
-- **Status:** in progress — Hero + Metrics built; remaining sections planned
+- **Status:** in progress — Hero, Metrics, About, Skills, Experience built; Projects / How-I-build / Content / Certifications / Contact planned
 - **Last updated:** 2026-06-24
 
 ## Goal
@@ -23,9 +23,9 @@ production AI experience and makes an AI engineer want to follow the weekly buil
 | --- | -------------------- | ---------------------------------------------------------------------- | ---------------- | -------- | ---- |
 | 1   | **Hero**             | Who Felipe is in one line + clear CTA; sets the dark-precision tone     | both             | ✅ built | `specs/sections/hero.md` |
 | 2   | **Metrics / proof**  | Hard numbers bar (resolution uplift, cost, years, AWS certs)           | recruiters       | ✅ built | `specs/sections/hero.md` |
-| 3   | **About**            | Short narrative: AI engineer shipping agent/LLM systems on AWS          | both             | planned  | `specs/sections/about.md` |
-| 4   | **Skills (grouped)** | Capabilities by group: RAG, orchestration, eval/observability, routing, MCP, guardrails, AWS, infra | both | planned | `specs/sections/skills.md` |
-| 5   | **Experience**       | Roles & impact, senior framing                                         | recruiters       | planned  | `specs/sections/experience.md` |
+| 3   | **About**            | Short narrative: AI engineer shipping agent/LLM systems on AWS          | both             | ✅ built | `specs/sections/about.md` |
+| 4   | **Skills (grouped)** | Capabilities by group: RAG, orchestration, eval/observability, routing, MCP, guardrails, AWS, infra | both | ✅ built | `specs/sections/skills.md` |
+| 5   | **Experience**       | Roles & impact, senior framing                                         | recruiters       | ✅ built | `specs/sections/experience.md` |
 | 6   | **Projects (bento)** | Filterable bento grid of weekend builds; the signature section         | both             | planned  | `specs/sections/projects.md` |
 | 7   | **How I build / SDD**| The Spec-Driven Development process; why the work is trustworthy        | both             | planned  | `specs/sections/how-i-build.md` |
 | 8   | **Content / links**  | Writing, talks, socials, build-in-public cadence                       | community        | planned  | `specs/sections/content.md` |

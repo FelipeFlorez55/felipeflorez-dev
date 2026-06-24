@@ -11,6 +11,14 @@ export function useTranslations(lang: Lang) {
   return (key: UIKey): string => ui[lang][key] ?? ui[defaultLang][key];
 }
 
+/** A value that exists in every locale (used for content in src/data/). */
+export type Localized<T = string> = Record<Lang, T>;
+
+/** Pick the value for the active locale from a Localized field. */
+export function pick<T>(value: Localized<T>, lang: Lang): T {
+  return value[lang];
+}
+
 /**
  * Given the current URL, return the equivalent path in each locale.
  * `/about` → { en: "/about", es: "/es/about" }; `/es/` → { en: "/", es: "/es/" }.
