@@ -1,0 +1,33 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import LanguageToggle from "./LanguageToggle.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const home = lang === "es" ? "/es/" : "/";
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-border/60 bg-bg/70 backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-6"
+  >
+    <a
+      href={home}
+      class="font-mono text-sm tracking-tight text-ink transition-opacity hover:opacity-70"
+    >
+      Felipe<span class="text-faint">.</span>Florez
+    </a>
+    <div class="flex items-center gap-5">
+      <LanguageToggle />
+      <a
+        href="/felipe-florez-cv.pdf"
+        download
+        class="font-mono text-xs tracking-widest text-faint uppercase transition-colors hover:text-ink"
+      >
+        {t("nav.cv")} ↓
+      </a>
+    </div>
+  </div>
+</header>

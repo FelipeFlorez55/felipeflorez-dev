@@ -4,7 +4,7 @@
 > intent of every block on the home page. Each section gets its own detailed spec in
 > `specs/sections/<name>.md` (created when we build it), using `_template.md`.
 
-- **Status:** draft (inventory only — no sections built yet)
+- **Status:** in progress — Hero + Metrics built; remaining sections planned
 - **Last updated:** 2026-06-24
 
 ## Goal
@@ -21,8 +21,8 @@ production AI experience and makes an AI engineer want to follow the weekly buil
 
 | #   | Section              | Purpose / what it proves                                                | Primary audience | Status   | Spec |
 | --- | -------------------- | ---------------------------------------------------------------------- | ---------------- | -------- | ---- |
-| 1   | **Hero**             | Who Felipe is in one line + clear CTA; sets the dark-precision tone     | both             | planned  | `specs/sections/hero.md` |
-| 2   | **Metrics / proof**  | Hard numbers bar (prod systems, scale, cost/latency wins)              | recruiters       | planned  | `specs/sections/metrics.md` |
+| 1   | **Hero**             | Who Felipe is in one line + clear CTA; sets the dark-precision tone     | both             | ✅ built | `specs/sections/hero.md` |
+| 2   | **Metrics / proof**  | Hard numbers bar (resolution uplift, cost, years, AWS certs)           | recruiters       | ✅ built | `specs/sections/hero.md` |
 | 3   | **About**            | Short narrative: AI engineer shipping agent/LLM systems on AWS          | both             | planned  | `specs/sections/about.md` |
 | 4   | **Skills (grouped)** | Capabilities by group: RAG, orchestration, eval/observability, routing, MCP, guardrails, AWS, infra | both | planned | `specs/sections/skills.md` |
 | 5   | **Experience**       | Roles & impact, senior framing                                         | recruiters       | planned  | `specs/sections/experience.md` |

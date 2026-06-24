@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { metrics } from "../data/metrics";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section
+  aria-label="Key metrics"
+  class="border-y border-border/60 bg-surface/40"
+>
+  <div class="mx-auto max-w-6xl px-6 py-10">
+    <dl class="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+      {
+        metrics.map((m) => (
+          <div data-reveal>
+            <dt class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+              {m.value}
+            </dt>
+            <dd class="mt-2 text-sm leading-snug text-muted text-pretty">
+              {t(m.labelKey)}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

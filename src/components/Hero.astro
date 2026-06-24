@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import portrait from "../assets/felipe-florez.png";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const contactEmail = "pipeflorez_99@hotmail.com";
+---
+
+<section class="mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28">
+  <div class="grid items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
+    <div>
+      <p
+        data-hero-item
+        class="font-mono text-xs tracking-widest text-accent uppercase sm:text-sm"
+      >
+        {t("hero.eyebrow")}
+      </p>
+      <h1
+        data-hero-item
+        class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+      >
+        {t("hero.heading")}
+      </h1>
+      <p
+        data-hero-item
+        class="mt-6 max-w-xl text-lg leading-relaxed text-muted text-pretty"
+      >
+        {t("hero.subcopy")}
+      </p>
+      <div data-hero-item class="mt-9 flex flex-wrap items-center gap-4">
+        <a
+          href={`mailto:${contactEmail}`}
+          class="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-ink transition-transform hover:-translate-y-0.5"
+        >
+          {t("hero.cta.primary")}
+        </a>
+        <a
+          href="/felipe-florez-cv.pdf"
+          download
+          class="rounded-full border border-border px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-faint"
+        >
+          {t("hero.cta.secondary")} ↓
+        </a>
+      </div>
+    </div>
+
+    <div data-hero-item class="justify-self-center lg:justify-self-end">
+      <div
+        class="rounded-3xl border border-border bg-elevated/40 p-2 shadow-2xl shadow-black/40"
+      >
+        <Image
+          src={portrait}
+          alt={t("hero.portraitAlt")}
+          width={400}
+          height={400}
+          widths={[256, 400, 800]}
+          sizes="(min-width: 1024px) 20rem, 16rem"
+          class="h-64 w-64 rounded-2xl object-cover sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </div>
+</section>
