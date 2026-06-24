@@ -14,11 +14,12 @@ or third time, capture it here — not before.
 | Skill         | Status  | Purpose                                                                 |
 | ------------- | ------- | ----------------------------------------------------------------------- |
 | `new-project` | ✅ ready | Scaffold a weekend project: case-study page + bento entry + TODOs.      |
+| `og-image`    | ✅ ready | Render a 1200×630 OG image (dark/editorial) via Chromium → `public/og/`. |
 
 ## Planned (create when the pattern actually repeats)
 
-- `og-image` — generate the 1200×630 OG image for a project/section.
-- `deploy-s3-cloudfront` — provision/deploy a project subdomain to S3 + CloudFront via
-  OIDC (see [docs/deployment.md](../../docs/deployment.md) for the target architecture).
+- `deploy-s3-cloudfront` — automate deploy via GitHub Actions OIDC (the manual path
+  already exists: `npm run deploy` → `scripts/deploy.sh`; target architecture in
+  [docs/deployment.md](../../docs/deployment.md)).
 
 Until those patterns repeat, do the work by hand and keep notes in the relevant spec.
