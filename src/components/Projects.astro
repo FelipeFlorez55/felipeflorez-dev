@@ -1,0 +1,182 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { projects, CATEGORIES } from "../data/projects";
+import type { UIKey } from "../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const hasProjects = projects.length > 0;
+// Only offer filters for categories that actually have projects.
+const activeCategories = CATEGORIES.filter((c) =>
+  projects.some((p) => p.category === c),
+);
+
+const spanClass: Record<string, string> = {
+  sm: "",
+  md: "lg:col-span-2",
+  lg: "sm:col-span-2",
+};
+
+const projectHref = (slug: string) =>
+  `/${lang === "es" ? "es/" : ""}projects/${slug}`;
+const githubUrl = "https://github.com/FelipeFlorez55";
+
+const chipBase =
+  "project-chip rounded-full border border-border px-4 py-1.5 font-mono text-xs tracking-widest uppercase text-faint transition-colors hover:text-ink";
+---
+
+<section
+  id="projects"
+  class="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 sm:py-28"
+>
+  <p
+    data-reveal
+    class="font-mono text-xs tracking-widest text-accent uppercase"
+  >
+    {t("projects.eyebrow")}
+  </p>
+  <h2
+    data-reveal
+    class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+  >
+    {t("projects.heading")}
+  </h2>
+  <p data-reveal class="mt-4 max-w-2xl text-lg text-muted text-pretty">
+    {t("projects.subcopy")}
+  </p>
+
+  {
+    hasProjects ? (
+      <Fragment>
+        <div
+          data-reveal
+          data-project-filters
+          class="mt-10 flex flex-wrap gap-2"
+        >
+          <button type="button" data-filter="all" aria-pressed="true" class={chipBase}>
+            {t("projects.filter.all")}
+          </button>
+          {activeCategories.map((c) => (
+            <button type="button" data-filter={c} aria-pressed="false" class={chipBase}>
+              {t(`category.${c}` as UIKey)}
+            </button>
+          ))}
+        </div>
+
+        <div
+          data-project-grid
+          class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:auto-rows-fr lg:grid-cols-3"
+        >
+          {projects.map((p) => (
+            <article
+              data-project
+              data-category={p.category}
+              class={`group relative flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-6 transition-transform duration-300 hover:-translate-y-1 ${spanClass[p.bentoSpan ?? "sm"]}`}
+            >
+              <div class="flex items-center justify-between gap-3">
+                <span class="font-mono text-xs tracking-widest text-faint uppercase">
+                  {t(`category.${p.category}` as UIKey)}
+                </span>
+                <span
+                  class={`font-mono text-[10px] tracking-widest uppercase ${p.status === "live" ? "text-accent" : "text-faint"}`}
+                >
+                  {p.status === "live" ? t("status.live") : t("status.wip")}
+                </span>
+              </div>
+
+              <h3 class="mt-4 text-xl font-medium text-ink">
+                <a href={projectHref(p.slug)} class="after:absolute after:inset-0">
+                  {p.title}
+                </a>
+              </h3>
+              <p class="mt-2 text-sm text-muted text-pretty">{p.summary}</p>
+
+              {p.stack.length > 0 && (
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {p.stack.slice(0, 5).map((s) => (
+                    <li class="rounded-full border border-border/70 px-2 py-0.5 font-mono text-[11px] text-faint">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div class="relative z-10 mt-auto flex gap-4 pt-5 font-mono text-xs tracking-widest uppercase">
+                {p.demoUrl && (
+                  <a
+                    href={p.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent hover:underline"
+                  >
+                    {t("projects.viewDemo")} →
+                  </a>
+                )}
+                <a
+                  href={p.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-faint hover:text-ink"
+                >
+                  {t("projects.viewSource")} →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Fragment>
+    ) : (
+      <div
+        data-reveal
+        class="mt-10 rounded-2xl border border-dashed border-border p-12 text-center"
+      >
+        <p class="text-lg font-medium text-ink">{t("projects.empty.title")}</p>
+        <p class="mx-auto mt-2 max-w-md text-sm text-muted text-pretty">
+          {t("projects.empty.body")}
+        </p>
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-6 inline-block rounded-full border border-border px-5 py-2.5 text-sm text-ink transition-colors hover:border-faint"
+        >
+          {t("projects.empty.cta")} →
+        </a>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  /* Active filter chip (no @apply — raw theme tokens to avoid @reference). */
+  .project-chip[aria-pressed="true"] {
+    border-color: color-mix(in oklch, var(--color-accent) 55%, transparent);
+    background-color: color-mix(in oklch, var(--color-accent) 12%, transparent);
+    color: var(--color-ink);
+  }
+</style>
+
+<script>
+  function initProjectFilters() {
+    const root = document.querySelector<HTMLElement>("[data-project-filters]");
+    const grid = document.querySelector<HTMLElement>("[data-project-grid]");
+    if (!root || !grid) return;
+    const chips = root.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const cards = grid.querySelectorAll<HTMLElement>("[data-project]");
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const f = chip.dataset.filter ?? "all";
+        chips.forEach((c) =>
+          c.setAttribute("aria-pressed", String(c === chip)),
+        );
+        cards.forEach((card) => {
+          const show = f === "all" || card.dataset.category === f;
+          card.classList.toggle("hidden", !show);
+        });
+      });
+    });
+  }
+  initProjectFilters();
+  document.addEventListener("astro:page-load", initProjectFilters);
+</script>

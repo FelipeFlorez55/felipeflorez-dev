@@ -62,6 +62,31 @@ export const ui = {
     "experience.eyebrow": "Experience",
     "experience.heading": "Where I've shipped",
     "experience.present": "Present",
+    "nav.projects": "Projects",
+
+    // Projects (bento)
+    "projects.eyebrow": "Projects",
+    "projects.heading": "Weekend builds",
+    "projects.subcopy":
+      "Every weekend I ship a small project with Spec-Driven Development: a live demo on its own subdomain, a public repo, and a short case study.",
+    "projects.filter.all": "All",
+    "projects.viewDemo": "Demo",
+    "projects.viewSource": "Source",
+    "projects.empty.title": "First builds shipping soon.",
+    "projects.empty.body":
+      "The first projects are on the way, each with a demo, a public repo, and a case study. Follow along on GitHub.",
+    "projects.empty.cta": "GitHub",
+
+    // Project categories
+    "category.agent": "Agents",
+    "category.tool": "Tools",
+    "category.calculator": "Calculators",
+    "category.game": "Games",
+    "category.experiment": "Experiments",
+
+    // Status
+    "status.live": "Live",
+    "status.wip": "WIP",
   },
   es: {
     "meta.title": "Felipe Florez, Ingeniero de IA",
@@ -116,6 +141,31 @@ export const ui = {
     "experience.eyebrow": "Experiencia",
     "experience.heading": "Dónde he entregado",
     "experience.present": "Actualidad",
+    "nav.projects": "Proyectos",
+
+    // Projects (bento)
+    "projects.eyebrow": "Proyectos",
+    "projects.heading": "Proyectos de fin de semana",
+    "projects.subcopy":
+      "Cada fin de semana publico un proyecto con Spec-Driven Development: una demo en vivo en su propio subdominio, un repo público y un mini case study.",
+    "projects.filter.all": "Todos",
+    "projects.viewDemo": "Demo",
+    "projects.viewSource": "Código",
+    "projects.empty.title": "Los primeros proyectos llegan pronto.",
+    "projects.empty.body":
+      "Los primeros proyectos vienen en camino, cada uno con demo, repo público y case study. Sígueme en GitHub.",
+    "projects.empty.cta": "GitHub",
+
+    // Project categories
+    "category.agent": "Agentes",
+    "category.tool": "Herramientas",
+    "category.calculator": "Calculadoras",
+    "category.game": "Juegos",
+    "category.experiment": "Experimentos",
+
+    // Status
+    "status.live": "En vivo",
+    "status.wip": "En curso",
   },
 } as const;
 
