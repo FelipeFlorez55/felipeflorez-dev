@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { projects } from "../../../data/projects";
+
+const slug = "indetectable";
+const project = projects.find((p) => p.slug === slug);
+if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
+
+const title = `${project.title} — Felipe Florez`;
+const ogImage = project.ogImage || "/og/default.png";
+
+const summaryEs =
+  "Un juego diario de navegador: falsifica un trazo que se camufle entre los de la máquina. Un detective algorítmico intenta cazar al intruso humano — ganas si no lo consigue.";
+---
+
+<BaseLayout title={title} description={summaryEs} ogImage={ogImage}>
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <p class="font-mono text-sm tracking-widest text-faint uppercase">
+      {project.category}
+    </p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
+      {project.title}
+    </h1>
+    <p class="mt-4 text-lg text-muted">{summaryEs}</p>
+
+    <div class="mt-6 flex flex-wrap gap-4 text-sm">
+      {
+        project.demoUrl ? (
+          <a class="text-accent" href={project.demoUrl}>
+            Demo en vivo →
+          </a>
+        ) : (
+          <span class="text-faint">Demo: muy pronto (indetectable.felipeflorez.dev)</span>
+        )
+      }
+      <a class="text-accent" href={project.repoUrl}>Código →</a>
+    </div>
+
+    {project.stack.length > 0 && (
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {project.stack.map((tag) => (
+          <li class="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* Caso de estudio — Problema → Mi rol → Tradeoff → Métrica (ver CLAUDE.md). */}
+    <section class="mt-16 space-y-10">
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Problema</h2>
+        <p class="mt-2 text-muted">
+          Construir un juego viral de "uno al día" que funcione sin backend, sin coste
+          recurrente y sin secretos — en un repositorio totalmente público. El reto central
+          es la detección: distinguir un trazo dibujado por una persona de los dibujados por
+          la máquina, en el navegador, al instante, sin dataset de entrenamiento ni modelo
+          que alojar. La habilidad que mide el juego es
+          <span class="text-ink"> la imitación, no la pulcritud</span> — dibujar demasiado
+          perfecto te delata tanto como dibujar tembloroso.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Mi rol</h2>
+        <p class="mt-2 text-muted">
+          Diseñé y construí todo el sistema spec-first: un
+          <span class="text-ink"> detector auto-calibrado</span>, sin DOM y sin dependencias,
+          que puntúa cada trazo como un z-score contra el clúster procedural del día —
+          conformidad de forma (normalización tipo $1-recognizer / Procrustes), micro-temblor
+          (residual de Savitzky–Golay), y firmas de velocidad y curvatura. Además: una semilla
+          diaria determinista (xmur3 + mulberry32), un modelo de dificultad de 3 perillas con
+          rotación semanal, captura de puntos crudos vs. de render (Pointer Events +
+          perfect-freehand), rachas en localStorage con el bloqueo de un intento estilo Wordle,
+          i18n es/en/pt y una tarjeta de veredicto compartible.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Tradeoff</h2>
+        <p class="mt-2 text-muted">
+          Elegí un detective algorítmico en vez de un LLM: corre 100% en el navegador a $0 con
+          inferencia instantánea, pero renuncia al juicio más rico que aportaría un modelo. Sin
+          cuentas ni sincronización — el progreso vive solo en localStorage, así que borrar la
+          caché pierde tu racha. La auto-calibración contra el clúster en pantalla elimina la
+          necesidad de un dataset, a cambio de un ajuste cuidadoso de pesos y umbrales por
+          característica frente a trazos humanos reales.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Métrica</h2>
+        <p class="mt-2 text-muted">
+          La v1 corre totalmente en el cliente con <span class="text-ink">71 tests unitarios</span>
+          que cubren separabilidad y determinismo del detector, scoring, escena/PRNG, dificultad,
+          persistencia, i18n, canvas y la tarjeta para compartir. El detector no añade llamadas de
+          red y son ~200 líneas de TS legible. Trabajo pendiente antes del lanzamiento: calibrar
+          pesos y umbrales del detector contra trazos humanos reales (objetivo: alta separabilidad
+          entre trazos falsificados y de máquina sin penalizar buenas imitaciones).
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

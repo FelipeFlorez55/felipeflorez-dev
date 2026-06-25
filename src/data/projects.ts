@@ -43,7 +43,32 @@ export interface Project {
   bentoSpan?: BentoSpan;
 }
 
-export const projects: Project[] = [];
+export const projects: Project[] = [
+  {
+    slug: "indetectable",
+    title: "Indetectable",
+    category: "game",
+    summary:
+      "A daily browser game: forge one stroke that blends into the machine's. An algorithmic detective tries to catch the human intruder — you win if it can't.",
+    date: "2026-06-25",
+    repoUrl: "https://github.com/FelipeFlorez55/indetectable",
+    demoUrl: "https://indetectable.felipeflorez.dev",
+    ogImage: "/og/indetectable.png",
+    stack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Canvas 2D",
+      "perfect-freehand",
+      "Zustand",
+      "Tailwind v4",
+      "Vitest",
+    ],
+    status: "live",
+    featured: true,
+    bentoSpan: "lg",
+  },
+];
 
 export const CATEGORIES: ProjectCategory[] = [
   "agent",
