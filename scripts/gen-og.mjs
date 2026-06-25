@@ -6,6 +6,10 @@
  * Usage:
  *   node scripts/gen-og.mjs                # default card → public/og/default.png
  *   node scripts/gen-og.mjs --title "X" --subtitle "Y" --out public/og/x.png [--no-portrait]
+ *   node scripts/gen-og.mjs --title "X" --mark public/foo-mark.svg --out public/og/x.png
+ *
+ * --mark <svg> inlines a project brand mark in the right-hand slot (instead of the
+ * portrait). The SVG is read from disk and embedded directly — no network needed.
  *
  * Requires `chromium` on PATH. Writes the HTML to a temp file next to --out.
  */
@@ -26,7 +30,13 @@ const eyebrow = arg("eyebrow", "LEAD AI ENGINEER · AWS SOLUTIONS ARCHITECT");
 const subtitle = arg("subtitle", "Agent & LLM systems in production on AWS.");
 const wordmark = arg("wordmark", "felipeflorez.dev");
 const out = resolve(ROOT, arg("out", "public/og/default.png"));
-const withPortrait = !hasFlag("no-portrait");
+const markPath = arg("mark", null);
+// A project mark replaces the portrait; passing --mark implies --no-portrait.
+const withPortrait = !hasFlag("no-portrait") && !markPath;
+
+const markSvg = markPath
+  ? readFileSync(resolve(ROOT, markPath), "utf8")
+  : null;
 
 const portraitDataUri = withPortrait
   ? "data:image/png;base64," +
@@ -63,12 +73,18 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     border: 1px solid oklch(0.30 0.008 270);
     box-shadow: 0 30px 80px oklch(0 0 0 / 0.5);
   }
+  .mark {
+    width: 340px; height: 340px; flex: none; border-radius: 28px; overflow: hidden;
+    box-shadow: 0 30px 80px oklch(0 0 0 / 0.5);
+  }
+  .mark svg { width: 100%; height: 100%; display: block; }
 </style></head><body>
   <div class="left">
     <div class="eyebrow">${eyebrow}</div>
     <h1>${title}</h1>
     <div class="sub">${subtitle}</div>
   </div>
+  ${markSvg ? `<div class="mark">${markSvg}</div>` : ""}
   ${portraitDataUri ? `<img class="portrait" src="${portraitDataUri}">` : ""}
   <div class="wordmark">${wordmark}</div>
 </body></html>`;
