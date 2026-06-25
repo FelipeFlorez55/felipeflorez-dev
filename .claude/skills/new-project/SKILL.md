@@ -39,7 +39,12 @@ strings (the TODOs below track wiring them up). Example shape:
   slug: "<slug>",
   title: "<name>",
   category: "<category>",
-  summary: "<summary or 'TODO: one-line summary'>",
+  // ALWAYS localize summary as { en, es } — the bento card and case-study pages
+  // render it in both locales. A bare string shows English on the /es/ site.
+  summary: {
+    en: "<one-line summary in English>",
+    es: "<el mismo resumen en español>",
+  },
   date: "<YYYY-MM-DD>",
   repoUrl: "https://github.com/FelipeFlorez55/<slug>", // TODO: confirm repo name
   demoUrl: "", // TODO: set to https://<slug>.felipeflorez.dev once the subdomain is live
@@ -49,6 +54,9 @@ strings (the TODOs below track wiring them up). Example shape:
 },
 ```
 
+> **Copy style:** no em dashes (`—`) in `summary` or case-study copy — use periods or
+> commas. Keep it one clean line per locale.
+
 ### 3. Create the case-study page
 
 Create `src/pages/projects/<slug>.astro` from this template (substitute `<...>`):
@@ -56,18 +64,19 @@ Create `src/pages/projects/<slug>.astro` from this template (substitute `<...>`)
 ```astro
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { projects } from "../../data/projects";
+import { projects, localize } from "../../data/projects";
 
 const slug = "<slug>";
 const project = projects.find((p) => p.slug === slug);
 if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
 
 const title = `${project.title} — Felipe Florez`;
+const summary = localize(project.summary, "en"); // es page passes "es"
 // TODO: set the OG image once generated (see `og-image` skill / docs).
 const ogImage = project.ogImage || "/og/default.png";
 ---
 
-<BaseLayout title={title} description={project.summary} ogImage={ogImage}>
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
   <main class="mx-auto max-w-3xl px-6 py-24">
     <p class="font-mono text-sm tracking-widest text-faint uppercase">
       {project.category}
@@ -75,7 +84,7 @@ const ogImage = project.ogImage || "/og/default.png";
     <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
       {project.title}
     </h1>
-    <p class="mt-4 text-lg text-muted">{project.summary}</p>
+    <p class="mt-4 text-lg text-muted">{summary}</p>
 
     <div class="mt-6 flex flex-wrap gap-4 text-sm">
       {project.demoUrl
@@ -106,6 +115,12 @@ const ogImage = project.ogImage || "/og/default.png";
   </main>
 </BaseLayout>
 ```
+
+**Also create the Spanish page** `src/pages/es/projects/<slug>.astro` (i18n hard rule:
+every page in both locales). Same markup, but: import paths go up one more level
+(`../../../`), pass `localize(project.summary, "es")`, and translate the eyebrow/labels
+and case-study copy to Spanish (Problema / Mi rol / Tradeoff / Métrica). The bento card
+links to `/es/projects/<slug>` for the ES site, so this page must exist.
 
 ### 4. Create the project spec
 

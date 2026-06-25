@@ -1,16 +1,14 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { projects } from "../../../data/projects";
+import { projects, localize } from "../../../data/projects";
 
 const slug = "indetectable";
 const project = projects.find((p) => p.slug === slug);
 if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
 
 const title = `${project.title} — Felipe Florez`;
+const summaryEs = localize(project.summary, "es");
 const ogImage = project.ogImage || "/og/default.png";
-
-const summaryEs =
-  "Un juego diario de navegador: falsifica un trazo que se camufle entre los de la máquina. Un detective algorítmico intenta cazar al intruso humano — ganas si no lo consigue.";
 ---
 
 <BaseLayout title={title} description={summaryEs} ogImage={ogImage}>

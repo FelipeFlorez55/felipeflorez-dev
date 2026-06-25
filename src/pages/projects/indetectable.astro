@@ -1,16 +1,17 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { projects } from "../../data/projects";
+import { projects, localize } from "../../data/projects";
 
 const slug = "indetectable";
 const project = projects.find((p) => p.slug === slug);
 if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
 
 const title = `${project.title} — Felipe Florez`;
+const summary = localize(project.summary, "en");
 const ogImage = project.ogImage || "/og/default.png";
 ---
 
-<BaseLayout title={title} description={project.summary} ogImage={ogImage}>
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
   <main class="mx-auto max-w-3xl px-6 py-24">
     <p class="font-mono text-sm tracking-widest text-faint uppercase">
       {project.category}
@@ -18,7 +19,7 @@ const ogImage = project.ogImage || "/og/default.png";
     <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
       {project.title}
     </h1>
-    <p class="mt-4 text-lg text-muted">{project.summary}</p>
+    <p class="mt-4 text-lg text-muted">{summary}</p>
 
     <div class="mt-6 flex flex-wrap gap-4 text-sm">
       {
