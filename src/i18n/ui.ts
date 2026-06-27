@@ -72,6 +72,7 @@ export const ui = {
     "projects.filter.all": "All",
     "projects.viewDemo": "Demo",
     "projects.viewSource": "Source",
+    "projects.back": "Back to projects",
     "projects.empty.title": "First builds shipping soon.",
     "projects.empty.body":
       "The first projects are on the way, each with a demo, a public repo, and a case study. Follow along on GitHub.",
@@ -165,6 +166,7 @@ export const ui = {
     "projects.filter.all": "Todos",
     "projects.viewDemo": "Demo",
     "projects.viewSource": "Código",
+    "projects.back": "Volver a proyectos",
     "projects.empty.title": "Los primeros proyectos llegan pronto.",
     "projects.empty.body":
       "Los primeros proyectos vienen en camino, cada uno con demo, repo público y case study. Sígueme en GitHub.",
