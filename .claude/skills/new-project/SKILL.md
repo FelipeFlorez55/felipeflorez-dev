@@ -1,6 +1,6 @@
 ---
 name: new-project
-description: Scaffold a new weekend project for felipeflorez.dev. Given a name, slug, and category, it creates the case-study page (src/pages/projects/<slug>.astro), prepends the entry to the bento grid (src/data/projects.ts), creates the project spec from the template, and leaves TODOs for the subdomain demo and the OG image. Use when starting a new weekend/SDD project.
+description: Scaffold a new weekend project for felipeflorez.dev. Given a name, slug, capability category, and format, it creates the case-study page (src/pages/projects/<slug>.astro), prepends the entry to the bento grid (src/data/projects.ts), creates the project spec from the template, and leaves TODOs for the subdomain demo and the OG image. Use when starting a new weekend/SDD project.
 ---
 
 # Skill: new-project
@@ -10,21 +10,29 @@ build the project itself or the demo — it wires the project into the portfolio
 
 ## Inputs
 
-Collect these (ask the user for any that are missing — do not guess the category):
+Collect these (ask the user for any that are missing — do not guess category or format):
 
 - **name** — display title, e.g. `"Cost-Aware Model Router"`.
 - **slug** — kebab-case id, e.g. `model-router`. If omitted, derive from the name
   (lowercase, spaces→`-`, strip punctuation). Used for `/projects/<slug>` and
   `<slug>.felipeflorez.dev`. Must be unique (not already in `src/data/projects.ts`).
-- **category** — one of: `agent` | `tool` | `calculator` | `game` | `experiment`
-  (must match `ProjectCategory` in `src/data/projects.ts`).
+- **category** — the AI-engineering **capability** the project proves; one of:
+  `agents` | `rag` | `guardrails` | `evals` | `routing` | `algorithms` (must match
+  `ProjectCategory` in `src/data/projects.ts`). This is the bento filter axis — pick the
+  capability a recruiter/client would search for, never the medium.
+- **format** — how it's **experienced**; one of: `game` | `tool` | `calculator` | `demo`
+  (must match `ProjectFormat`). Rendered as a small badge (▶ Playable for `game`), NOT a
+  filter. Keep capability and format separate: e.g. a guardrail shown as a game is
+  `category: "guardrails"`, `format: "game"`.
+- **tags** _(optional)_ — domain/capability tags (e.g. `["prompt-injection", "on-device"]`),
+  distinct from the tech `stack`.
 - **summary** _(optional)_ — one line for the bento card. Placeholder if omitted.
 
 ## Steps
 
 ### 1. Validate
 
-- Confirm `category` is a valid `ProjectCategory`.
+- Confirm `category` is a valid `ProjectCategory` and `format` is a valid `ProjectFormat`.
 - Confirm the slug is not already present in `src/data/projects.ts` and that
   `src/pages/projects/<slug>.astro` does not already exist. If it exists, stop and report.
 
@@ -38,7 +46,8 @@ strings (the TODOs below track wiring them up). Example shape:
 {
   slug: "<slug>",
   title: "<name>",
-  category: "<category>",
+  category: "<category>", // capability: agents|rag|guardrails|evals|routing|algorithms
+  format: "<format>",     // medium: game|tool|calculator|demo (badge, not a filter)
   // ALWAYS localize summary as { en, es } — the bento card and case-study pages
   // render it in both locales. A bare string shows English on the /es/ site.
   summary: {
@@ -49,7 +58,8 @@ strings (the TODOs below track wiring them up). Example shape:
   repoUrl: "https://github.com/FelipeFlorez55/<slug>", // TODO: confirm repo name
   demoUrl: "", // TODO: set to https://<slug>.felipeflorez.dev once the subdomain is live
   ogImage: "", // TODO: generate /og/<slug>.png (1200×630) — future `og-image` skill
-  stack: [],   // TODO: fill stack tags
+  stack: [],   // TODO: fill tech stack tags
+  tags: [],    // optional: domain tags (e.g. "prompt-injection", "on-device")
   status: "wip",
 },
 ```
@@ -65,7 +75,10 @@ Create `src/pages/projects/<slug>.astro` from this template (substitute `<...>`)
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, localize } from "../../data/projects";
+import { useTranslations } from "../../i18n/utils";
+import type { UIKey } from "../../i18n/ui";
 
+const t = useTranslations("en"); // es page passes "es"
 const slug = "<slug>";
 const project = projects.find((p) => p.slug === slug);
 if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
@@ -79,7 +92,10 @@ const ogImage = project.ogImage || "/og/default.png";
 <BaseLayout title={title} description={summary} ogImage={ogImage}>
   <main class="mx-auto max-w-3xl px-6 py-24">
     <p class="font-mono text-sm tracking-widest text-faint uppercase">
-      {project.category}
+      {t(`category.${project.category}` as UIKey)}
+      {project.format === "game" && (
+        <span class="text-accent">· ▶ {t(`format.${project.format}` as UIKey)}</span>
+      )}
     </p>
     <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
       {project.title}
@@ -118,9 +134,10 @@ const ogImage = project.ogImage || "/og/default.png";
 
 **Also create the Spanish page** `src/pages/es/projects/<slug>.astro` (i18n hard rule:
 every page in both locales). Same markup, but: import paths go up one more level
-(`../../../`), pass `localize(project.summary, "es")`, and translate the eyebrow/labels
-and case-study copy to Spanish (Problema / Mi rol / Tradeoff / Métrica). The bento card
-links to `/es/projects/<slug>` for the ES site, so this page must exist.
+(`../../../`), use `useTranslations("es")`, pass `localize(project.summary, "es")`, and
+translate the case-study copy to Spanish (Problema / Mi rol / Tradeoff / Métrica). The
+category/format eyebrow uses `t(...)` so it localizes automatically. The bento card links
+to `/es/projects/<slug>` for the ES site, so this page must exist.
 
 ### 4. Create the project spec
 

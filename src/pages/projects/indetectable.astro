@@ -1,7 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, localize } from "../../data/projects";
+import { useTranslations } from "../../i18n/utils";
+import type { UIKey } from "../../i18n/ui";
 
+const t = useTranslations("en");
 const slug = "indetectable";
 const project = projects.find((p) => p.slug === slug);
 if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
@@ -14,7 +17,10 @@ const ogImage = project.ogImage || "/og/default.png";
 <BaseLayout title={title} description={summary} ogImage={ogImage}>
   <main class="mx-auto max-w-3xl px-6 py-24">
     <p class="font-mono text-sm tracking-widest text-faint uppercase">
-      {project.category}
+      {t(`category.${project.category}` as UIKey)}
+      {project.format === "game" && (
+        <span class="text-accent">· ▶ {t(`format.${project.format}` as UIKey)}</span>
+      )}
     </p>
     <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
       {project.title}

@@ -78,11 +78,19 @@ const chipBase =
                 <span class="font-mono text-xs tracking-widest text-faint uppercase">
                   {t(`category.${p.category}` as UIKey)}
                 </span>
-                <span
-                  class={`font-mono text-[10px] tracking-widest uppercase ${p.status === "live" ? "text-accent" : "text-faint"}`}
-                >
-                  {p.status === "live" ? t("status.live") : t("status.wip")}
-                </span>
+                <div class="flex items-center gap-3">
+                  <span
+                    class={`font-mono text-[10px] tracking-widest uppercase ${p.format === "game" ? "text-accent" : "text-faint"}`}
+                  >
+                    {p.format === "game" ? "▶ " : ""}
+                    {t(`format.${p.format}` as UIKey)}
+                  </span>
+                  <span
+                    class={`font-mono text-[10px] tracking-widest uppercase ${p.status === "live" ? "text-accent" : "text-faint"}`}
+                  >
+                    {p.status === "live" ? t("status.live") : t("status.wip")}
+                  </span>
+                </div>
               </div>
 
               <h3 class="mt-4 text-xl font-medium text-ink">

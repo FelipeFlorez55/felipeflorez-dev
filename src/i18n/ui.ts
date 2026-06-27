@@ -77,12 +77,19 @@ export const ui = {
       "The first projects are on the way, each with a demo, a public repo, and a case study. Follow along on GitHub.",
     "projects.empty.cta": "GitHub",
 
-    // Project categories
-    "category.agent": "Agents",
-    "category.tool": "Tools",
-    "category.calculator": "Calculators",
-    "category.game": "Games",
-    "category.experiment": "Experiments",
+    // Project categories (capability — the filter axis)
+    "category.agents": "Agents",
+    "category.rag": "RAG",
+    "category.guardrails": "Guardrails",
+    "category.evals": "Evals",
+    "category.routing": "Routing",
+    "category.algorithms": "Algorithms",
+
+    // Project format (badge — how it's experienced)
+    "format.game": "Playable",
+    "format.tool": "Tool",
+    "format.calculator": "Calculator",
+    "format.demo": "Demo",
 
     // Status
     "status.live": "Live",
@@ -163,12 +170,19 @@ export const ui = {
       "Los primeros proyectos vienen en camino, cada uno con demo, repo público y case study. Sígueme en GitHub.",
     "projects.empty.cta": "GitHub",
 
-    // Project categories
-    "category.agent": "Agentes",
-    "category.tool": "Herramientas",
-    "category.calculator": "Calculadoras",
-    "category.game": "Juegos",
-    "category.experiment": "Experimentos",
+    // Project categories (capability — the filter axis)
+    "category.agents": "Agentes",
+    "category.rag": "RAG",
+    "category.guardrails": "Guardrails",
+    "category.evals": "Evals",
+    "category.routing": "Ruteo",
+    "category.algorithms": "Algoritmos",
+
+    // Project format (badge — how it's experienced)
+    "format.game": "Jugable",
+    "format.tool": "Herramienta",
+    "format.calculator": "Calculadora",
+    "format.demo": "Demo",
 
     // Status
     "status.live": "En vivo",

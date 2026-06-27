@@ -10,13 +10,26 @@
  * Keep entries newest-first.
  */
 
-/** Bento filter categories. Keep in sync with the bento UI filter chips. */
+/**
+ * Bento filter categories — the AI-engineering CAPABILITY a project proves.
+ * This is the axis recruiters/clients filter by; it positions the work, not the
+ * medium. The medium (game, tool, ...) lives in `format` below. Keep in sync with
+ * the bento UI filter chips and the `category.*` keys in src/i18n/ui.ts.
+ */
 export type ProjectCategory =
-  | "agent"
-  | "tool"
-  | "calculator"
-  | "game"
-  | "experiment";
+  | "agents"
+  | "rag"
+  | "guardrails"
+  | "evals"
+  | "routing"
+  | "algorithms";
+
+/**
+ * How a project is experienced — rendered as a small badge on the card, NOT a
+ * primary filter. Keeps "playable" a delightful detail instead of the headline.
+ * Keep in sync with the `format.*` keys in src/i18n/ui.ts.
+ */
+export type ProjectFormat = "game" | "tool" | "calculator" | "demo";
 
 /** Visual weight of a card in the bento grid. */
 export type BentoSpan = "sm" | "md" | "lg";
@@ -33,7 +46,10 @@ export interface Project {
   /** Stable identifier. Used for /projects/<slug> and <slug>.felipeflorez.dev. */
   slug: string;
   title: string;
+  /** The AI-engineering capability this project demonstrates (the filter axis). */
   category: ProjectCategory;
+  /** How it's experienced (game/tool/...). Shown as a badge, not a filter. */
+  format: ProjectFormat;
   /** One line for the bento card. String = English-only, or `{ en, es }`. */
   summary: Localized;
   /** ISO date (YYYY-MM-DD) the project shipped. */
@@ -46,6 +62,8 @@ export interface Project {
   ogImage: string;
   /** Tech/stack tags shown on the card and case study. */
   stack: string[];
+  /** Optional domain/capability tags (distinct from `stack`'s tech tags). */
+  tags?: string[];
   status: "live" | "wip";
   featured?: boolean;
   bentoSpan?: BentoSpan;
@@ -55,7 +73,8 @@ export const projects: Project[] = [
   {
     slug: "indetectable",
     title: "Indetectable",
-    category: "game",
+    category: "algorithms",
+    format: "game",
     summary: {
       en: "A daily browser game: forge one stroke that blends into the machine's. An algorithmic detective tries to catch the human intruder. You win if it can't.",
       es: "Un juego diario de navegador: falsifica un trazo que se camufle entre los de la máquina. Un detective algorítmico intenta cazar al intruso humano. Ganas si no lo consigue.",
@@ -74,16 +93,23 @@ export const projects: Project[] = [
       "Tailwind v4",
       "Vitest",
     ],
+    tags: ["signal-processing", "client-side", "on-device"],
     status: "live",
     featured: true,
     bentoSpan: "lg",
   },
 ];
 
+/**
+ * All capability categories, in display order. The bento only renders chips for
+ * categories that actually have a project (see Projects.astro), so listing a
+ * not-yet-used capability here is fine — it stays hidden until its first build.
+ */
 export const CATEGORIES: ProjectCategory[] = [
-  "agent",
-  "tool",
-  "calculator",
-  "game",
-  "experiment",
+  "agents",
+  "rag",
+  "guardrails",
+  "evals",
+  "routing",
+  "algorithms",
 ];
