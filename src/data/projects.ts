@@ -71,6 +71,34 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "canary",
+    title: "Canary",
+    category: "guardrails",
+    format: "game",
+    summary: {
+      en: "A browser game where you are the attacker: sneak a prompt injection past a guardrail that runs 100% on your device. A layered pipeline (normalization, heuristics, a 22M ONNX classifier) returns BLOCKED or PASS with a confidence score and the layer that caught you.",
+      es: "Un juego de navegador donde eres el atacante: cuela una inyección de prompts ante un guardrail que corre 100% en tu dispositivo. Un pipeline por capas (normalización, heurísticas, un clasificador ONNX de 22M) responde BLOCKED o PASS con un score de confianza y la capa que te atrapó.",
+    },
+    date: "2026-06-27",
+    repoUrl: "https://github.com/FelipeFlorez55/canary",
+    demoUrl: "https://canary.felipeflorez.dev",
+    ogImage: "/og/canary.png",
+    stack: [
+      "Transformers.js",
+      "ONNX",
+      "Llama Prompt Guard 2 (22M)",
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind v4",
+      "Zustand",
+    ],
+    tags: ["prompt-injection", "on-device", "client-side", "OWASP LLM01"],
+    status: "live",
+    featured: true,
+    bentoSpan: "lg",
+  },
+  {
     slug: "mi-hogar",
     title: "Mi Hogar",
     category: "agents",

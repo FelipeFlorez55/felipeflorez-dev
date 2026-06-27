@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects, localize } from "../../data/projects";
+import { useTranslations } from "../../i18n/utils";
+import type { UIKey } from "../../i18n/ui";
+
+const t = useTranslations("en");
+const slug = "canary";
+const project = projects.find((p) => p.slug === slug);
+if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
+
+const title = `${project.title} — Felipe Florez`;
+const summary = localize(project.summary, "en");
+const ogImage = project.ogImage || "/og/default.png";
+---
+
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <a
+      href="/#projects"
+      class="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
+    >
+      <span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
+      {t("projects.back")}
+    </a>
+    <p class="mt-10 font-mono text-sm tracking-widest text-faint uppercase">
+      {t(`category.${project.category}` as UIKey)}
+      {project.format === "game" && (
+        <span class="text-accent">· ▶ {t(`format.${project.format}` as UIKey)}</span>
+      )}
+    </p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
+      {project.title}
+    </h1>
+    <p class="mt-4 text-lg text-muted">{summary}</p>
+
+    <div class="mt-6 flex flex-wrap gap-4 text-sm">
+      {
+        project.demoUrl ? (
+          <a class="text-accent" href={project.demoUrl}>
+            Live demo →
+          </a>
+        ) : (
+          <span class="text-faint">Demo: coming soon (canary.felipeflorez.dev)</span>
+        )
+      }
+      <a class="text-accent" href={project.repoUrl}>Source →</a>
+    </div>
+
+    {project.stack.length > 0 && (
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {project.stack.map((tag) => (
+          <li class="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* Case study — Problem → My role → Tradeoff → Metric (see CLAUDE.md). */}
+    <section class="mt-16 space-y-10">
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Problem</h2>
+        <p class="mt-2 text-muted">
+          LLM apps need a prompt-injection guard, but a hosted one
+          <span class="text-ink"> costs money, adds latency, and ships user text to a
+          server</span>. Can a useful guardrail run with zero backend, on any device,
+          including phones, and stay honest about being bypassable? That last part matters:
+          a guard that oversells itself is worse than no guard.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">My role</h2>
+        <p class="mt-2 text-muted">
+          Designed and built the whole thing spec-first as a
+          <span class="text-ink"> layered, client-side defense</span> (OWASP LLM01). A
+          pipeline, not a single model call: Unicode NFKC normalization plus zero-width and
+          homoglyph stripping and base64/leet decoding, an explainable regex/denylist of
+          known injection patterns, then Meta's Llama Prompt Guard 2 (22M, DeBERTa-xsmall)
+          as a quantized ~72 MB ONNX model running in-browser via Transformers.js on
+          WASM/CPU, and a score-fusion stage that returns a calibrated BLOCKED/PASS with a
+          confidence and the exact layer that fired. Wrapped it in a game: each round assigns
+          an intent (infiltrate vs stress-test) so a PASS is meaningful, with a lenient
+          intent gate, separate from the guard, that kills the "type hola and win" loophole.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Tradeoff</h2>
+        <p class="mt-2 text-muted">
+          Chose a 22M encoder classifier over a generative guard LLM. That gives up some
+          recall and all non-English coverage, and the model runs on WASM/CPU because ORT's
+          WebGPU path silently miscomputes this int8 model. In return: roughly $0 to run,
+          sub-second inference, full privacy (nothing leaves the device), and it works on a
+          phone. The heuristic layer buys back recall on the blatant, well-known attacks the
+          small model would wave through, and normalization kills the obfuscation tricks that
+          fool both. No single stage is trusted alone.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Metric</h2>
+        <p class="mt-2 text-muted">
+          The quantized classifier reports <span class="text-ink">precision 0.997 /
+          recall 0.920</span> in English (vendor-reported on a jailbreak set), so it rarely
+          false-flags but misses some attacks, which is exactly why the pipeline is layered.
+          v1 ships fully client-side, ~$0, offline after first load, with the model cached in
+          the browser. What I would measure next: end-to-end pipeline recall on an
+          adversarial/obfuscated set, and the false-positive rate on benign English and
+          Spanish text. The UI states the honest limit: v1 detection is English-effective.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
