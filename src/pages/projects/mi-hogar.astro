@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects, localize } from "../../data/projects";
+import { useTranslations } from "../../i18n/utils";
+import type { UIKey } from "../../i18n/ui";
+
+const t = useTranslations("en");
+const slug = "mi-hogar";
+const project = projects.find((p) => p.slug === slug);
+if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
+
+const title = `${project.title} — Felipe Florez`;
+const summary = localize(project.summary, "en");
+const ogImage = project.ogImage || "/og/default.png";
+---
+
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <p class="font-mono text-sm tracking-widest text-faint uppercase">
+      {t(`category.${project.category}` as UIKey)}
+      <span class="text-faint">· {t(`format.${project.format}` as UIKey)}</span>
+    </p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
+      {project.title}
+    </h1>
+    <p class="mt-4 text-lg text-muted">{summary}</p>
+
+    <div class="mt-6 flex flex-wrap gap-4 text-sm">
+      {
+        project.demoUrl ? (
+          <a class="text-accent" href={project.demoUrl}>
+            Live demo →
+          </a>
+        ) : (
+          <span class="text-faint">Private single-user app. Source below.</span>
+        )
+      }
+      <a class="text-accent" href={project.repoUrl}>Source →</a>
+    </div>
+
+    {project.stack.length > 0 && (
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {project.stack.map((tag) => (
+          <li class="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* Case study — Problem → My role → Tradeoff → Metric (see CLAUDE.md). */}
+    <section class="mt-16 space-y-10">
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Problem</h2>
+        <p class="mt-2 text-muted">
+          Most finance apps die because logging an expense is friction. The bet here: the
+          fastest input is a <span class="text-ink">chat message</span> you already have open
+          on your phone. So the primary interface is a Telegram bot, not a form. The
+          constraints: money has to be exact, the data has to be locked to a single owner,
+          and the whole thing ships as a fully public reference repo with no real financial
+          data in it.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">My role</h2>
+        <p class="mt-2 text-muted">
+          Designed and built the whole system spec-first. An OpenAI
+          <span class="text-ink"> tool-calling agent</span> (11 typed tools, a bounded
+          6-hop loop) parses natural language, Whisper-transcribed voice notes, and
+          vision-extracted receipt photos into typed transactions. Money is stored as
+          integer cents with a currency code per row. The numeric work lives in pure,
+          tested TypeScript, not the prompt: amortization schedules, a reduce-term vs
+          reduce-installment payoff simulator, and a Colombian payroll engine (UVT brackets,
+          retefuente, salario integral, AFC). Single-owner Row-Level Security gates every
+          table, the service-role key never reaches the client, and the webhook validates a
+          secret header plus a Telegram whitelist.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Tradeoff</h2>
+        <p class="mt-2 text-muted">
+          The LLM is an input parser, not a database and not a calculator. The agent only
+          calls typed tools; every amount, budget and amortization number is computed in
+          tested TypeScript. That gives up the flexibility of letting the model reason over
+          numbers, but buys exactness and testability where it matters most: money. Chose
+          Telegram over a custom app for zero-friction capture, at the cost of a
+          conversational UI you cannot fully control.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Metric</h2>
+        <p class="mt-2 text-muted">
+          Money is exact by construction: integer cents, never floats, with a currency code
+          per row and USD auto-converted at the day's TRM. Every external input (Telegram
+          payloads, tool-call arguments, forms) is Zod-validated. The agent loop is bounded
+          to 6 tool hops, and access is locked down by RLS scoped to one owner. This site
+          links the cleaned, data-free public copy: every amount, identity and credential in
+          it is a placeholder.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

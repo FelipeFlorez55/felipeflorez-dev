@@ -71,6 +71,34 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "mi-hogar",
+    title: "Mi Hogar",
+    category: "agents",
+    format: "tool",
+    summary: {
+      en: "A single-user finance tracker you run by chatting with a Telegram bot. An OpenAI agent with typed tools turns text, voice notes and receipt photos into transactions; a Next.js dashboard covers reports, budgets, debts and Colombian payroll.",
+      es: "Un gestor de finanzas personales de un solo usuario que manejas chateando con un bot de Telegram. Un agente de OpenAI con tools tipadas convierte texto, notas de voz y fotos de recibos en transacciones; un dashboard en Next.js cubre reportes, presupuestos, deudas y nómina colombiana.",
+    },
+    date: "2026-06-22",
+    repoUrl: "https://github.com/FelipeFlorez55/mi-hogar-finance",
+    demoUrl: "",
+    ogImage: "/og/mi-hogar.png",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "Supabase",
+      "OpenAI",
+      "Telegram Bot API",
+      "Postgres",
+      "Zod",
+      "Tailwind v4",
+      "Vercel",
+    ],
+    tags: ["tool-calling", "multimodal", "row-level-security", "fintech"],
+    status: "live",
+    bentoSpan: "md",
+  },
+  {
     slug: "indetectable",
     title: "Indetectable",
     category: "algorithms",

@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { projects, localize } from "../../../data/projects";
+import { useTranslations } from "../../../i18n/utils";
+import type { UIKey } from "../../../i18n/ui";
+
+const t = useTranslations("es");
+const slug = "mi-hogar";
+const project = projects.find((p) => p.slug === slug);
+if (!project) throw new Error(`Project not found in src/data/projects.ts: ${slug}`);
+
+const title = `${project.title} — Felipe Florez`;
+const summary = localize(project.summary, "es");
+const ogImage = project.ogImage || "/og/default.png";
+---
+
+<BaseLayout title={title} description={summary} ogImage={ogImage}>
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <p class="font-mono text-sm tracking-widest text-faint uppercase">
+      {t(`category.${project.category}` as UIKey)}
+      <span class="text-faint">· {t(`format.${project.format}` as UIKey)}</span>
+    </p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight text-balance">
+      {project.title}
+    </h1>
+    <p class="mt-4 text-lg text-muted">{summary}</p>
+
+    <div class="mt-6 flex flex-wrap gap-4 text-sm">
+      {
+        project.demoUrl ? (
+          <a class="text-accent" href={project.demoUrl}>
+            Demo en vivo →
+          </a>
+        ) : (
+          <span class="text-faint">App privada de un solo usuario. Código abajo.</span>
+        )
+      }
+      <a class="text-accent" href={project.repoUrl}>Código →</a>
+    </div>
+
+    {project.stack.length > 0 && (
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {project.stack.map((tag) => (
+          <li class="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* Case study — Problema → Mi rol → Tradeoff → Métrica (ver CLAUDE.md). */}
+    <section class="mt-16 space-y-10">
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Problema</h2>
+        <p class="mt-2 text-muted">
+          La mayoría de apps de finanzas mueren porque registrar un gasto es fricción. La
+          apuesta acá: el input más rápido es un <span class="text-ink">mensaje de chat</span>
+          que ya tienes abierto en el teléfono. Por eso la interfaz principal es un bot de
+          Telegram, no un formulario. Las restricciones: la plata tiene que ser exacta, los
+          datos tienen que quedar bloqueados a un solo dueño, y todo se publica como un repo
+          de referencia totalmente público, sin datos financieros reales dentro.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Mi rol</h2>
+        <p class="mt-2 text-muted">
+          Diseñé y construí todo el sistema spec-first. Un
+          <span class="text-ink"> agente de OpenAI con tool calling</span> (11 tools tipadas,
+          un loop acotado a 6 saltos) convierte lenguaje natural, notas de voz transcritas con
+          Whisper y fotos de recibos extraídas por visión en transacciones tipadas. La plata
+          se guarda como enteros en centavos, con un código de moneda por fila. La parte
+          numérica vive en TypeScript puro y testeado, no en el prompt: tablas de amortización,
+          un simulador de pago anticipado (reducir plazo vs. reducir cuota) y un motor de
+          nómina colombiana (rangos de UVT, retefuente, salario integral, AFC). Row-Level
+          Security de un solo dueño protege cada tabla, la service-role key nunca llega al
+          cliente, y el webhook valida un header secreto más una whitelist de Telegram.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Tradeoff</h2>
+        <p class="mt-2 text-muted">
+          El LLM es un parser de input, no una base de datos ni una calculadora. El agente
+          solo llama tools tipadas; cada monto, presupuesto y número de amortización se calcula
+          en TypeScript testeado. Eso renuncia a la flexibilidad de dejar que el modelo razone
+          sobre los números, pero compra exactitud y testabilidad donde más importa: la plata.
+          Elegí Telegram sobre una app propia por la captura sin fricción, a cambio de una UI
+          conversacional que no controlas del todo.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-sm tracking-widest text-faint uppercase">Métrica</h2>
+        <p class="mt-2 text-muted">
+          La plata es exacta por construcción: enteros en centavos, nunca floats, con código
+          de moneda por fila y dólares convertidos automáticamente con la TRM del día. Todo
+          input externo (payloads de Telegram, args de tool calls, formularios) se valida con
+          Zod. El loop del agente está acotado a 6 saltos de tool, y el acceso queda bloqueado
+          por RLS scoped al dueño. Este sitio enlaza la copia pública limpia y sin datos: cada
+          monto, identidad y credencial dentro es un placeholder.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
