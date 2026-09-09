@@ -26,8 +26,8 @@ function arg(name, fallback) {
 const hasFlag = (name) => process.argv.includes(`--${name}`);
 
 const title = arg("title", "Felipe Florez");
-const eyebrow = arg("eyebrow", "LEAD AI ENGINEER · AWS SOLUTIONS ARCHITECT");
-const subtitle = arg("subtitle", "Agent & LLM systems in production on AWS.");
+const eyebrow = arg("eyebrow", "FOUNDING ENGINEER AT EMILIA · AWS SOLUTIONS ARCHITECT");
+const subtitle = arg("subtitle", "Production AI systems, from first architecture to scale.");
 const wordmark = arg("wordmark", "felipeflorez.dev");
 const out = resolve(ROOT, arg("out", "public/og/default.png"));
 const markPath = arg("mark", null);

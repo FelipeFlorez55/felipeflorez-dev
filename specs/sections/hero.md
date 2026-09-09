@@ -2,7 +2,7 @@
 
 - **Type:** section
 - **Status:** built
-- **Last updated:** 2026-06-24
+- **Last updated:** 2026-09-08
 - **Related:** specs/landing.md · src/components/Hero.astro · src/components/MetricsBar.astro
 
 ## 1. Goal
@@ -19,11 +19,11 @@ certified." Community: "this person builds real agent/LLM systems — worth foll
 ## 3. Content (from CV — real data)
 
 **Hero**
-- Eyebrow: `Lead AI Engineer · AWS Solutions Architect · Medellín, CO`
+- Eyebrow: `Founding Engineer at Emilia · AWS Solutions Architect · Medellín, CO`
 - Heading (EN): "I build agent & LLM systems that run in production."
 - Heading (ES): "Construyo sistemas de agentes y LLM que viven en producción."
-- Subcopy: orchestration, RAG, secure tool execution on AWS + eval/observability/cost
-  control at scale.
+- Subcopy: at Emilia, end-to-end AI product work spanning architecture, integrations,
+  automation, and infrastructure, with speed, scalability, reliability, and UX in mind.
 - CTAs: primary "Get in touch" → **LinkedIn** (neutral/professional, low-signal — not a
   "hire me" mailto), secondary "Download CV" (`/felipe-florez-cv.pdf`). Email stays in
   the footer for direct contact. Copy is deliberately neutral — no "open to work" wording

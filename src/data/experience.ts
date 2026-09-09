@@ -1,6 +1,6 @@
 /**
  * Professional experience for the Experience section. Localized fields carry EN/ES.
- * Source: CV. Newest-first. Keep highlights concise and metric-led.
+ * Source: CV + LinkedIn. Newest-first. Keep highlights concise and metric-led.
  */
 import type { Localized } from "../i18n/utils";
 
@@ -14,9 +14,28 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
+    company: "Emilia",
+    role: { en: "Founding Engineer", es: "Founding Engineer" },
+    period: { en: "Aug 2026 – Present", es: "Ago 2026 – Actualidad" },
+    location: {
+      en: "Remote · Medellín, Colombia",
+      es: "Remoto · Medellín, Colombia",
+    },
+    highlights: {
+      en: [
+        "Build the product and technical foundation for real-time restaurant AI, spanning end-to-end features, architecture, APIs, integrations, automation, and infrastructure.",
+        "Partner with the founders on product strategy, technical priorities, and execution, balancing speed with scalability, reliability, and user experience.",
+      ],
+      es: [
+        "Construyo las bases técnicas y de producto de IA en tiempo real para restaurantes: funcionalidades end-to-end, arquitectura, APIs, integraciones, automatización e infraestructura.",
+        "Trabajo con los fundadores en estrategia de producto, prioridades técnicas y ejecución, equilibrando velocidad con escalabilidad, fiabilidad y experiencia de usuario.",
+      ],
+    },
+  },
+  {
     company: "SoftServe",
     role: { en: "R&D Engineer, AI", es: "Ingeniero de I+D, IA" },
-    period: { en: "Feb 2026 – Present", es: "Feb 2026 – Actualidad" },
+    period: { en: "Feb 2026 – Aug 2026", es: "Feb 2026 – Ago 2026" },
     location: { en: "Remote", es: "Remoto" },
     highlights: {
       en: [

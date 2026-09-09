@@ -6,10 +6,13 @@
 
 ## Purpose & positioning
 
-`felipeflorez.dev` is the personal site + portfolio of **Felipe Florez, AI Engineer**.
+`felipeflorez.dev` is the personal site + portfolio of **Felipe Florez, Founding
+Engineer at Emilia**.
 
-- **What Felipe does:** designs and ships agent / LLM systems in production on AWS —
-  RAG, orchestration, eval & observability, cost-aware model routing, MCP, guardrails.
+- **What Felipe does:** builds production AI products across product engineering,
+  architecture, integrations, automation, and infrastructure, with a background in
+  agent / LLM systems on AWS — RAG, orchestration, eval & observability, cost-aware
+  model routing, MCP, and guardrails.
 - **Two audiences:** (1) recruiters & enterprise clients, (2) the AI-engineering
   community.
 - **The hook:** the site is a living build log. Every weekend a new project ships,

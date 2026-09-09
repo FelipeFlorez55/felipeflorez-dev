@@ -5,12 +5,13 @@
 > `specs/sections/<name>.md` (created when we build it), using `_template.md`.
 
 - **Status:** in progress — Hero, Metrics, About, Skills, Experience, Projects, Certifications built; How-I-build / Content / Contact planned
-- **Last updated:** 2026-06-24
+- **Last updated:** 2026-09-08
 
 ## Goal
 
-A single, fast, dark-editorial page that, in one scroll, makes a recruiter trust Felipe's
-production AI experience and makes an AI engineer want to follow the weekly builds.
+A single, fast, dark-editorial page that, in one scroll, establishes Felipe as a
+Founding Engineer building production AI products and makes an AI engineer want to
+follow the weekly builds.
 
 ## Audiences
 
@@ -23,7 +24,7 @@ production AI experience and makes an AI engineer want to follow the weekly buil
 | --- | -------------------- | ---------------------------------------------------------------------- | ---------------- | -------- | ---- |
 | 1   | **Hero**             | Who Felipe is in one line + clear CTA; sets the dark-precision tone     | both             | ✅ built | `specs/sections/hero.md` |
 | 2   | **Metrics / proof**  | Hard numbers bar (resolution uplift, cost, years, AWS certs)           | recruiters       | ✅ built | `specs/sections/hero.md` |
-| 3   | **About**            | Short narrative: AI engineer shipping agent/LLM systems on AWS          | both             | ✅ built | `specs/sections/about.md` |
+| 3   | **About**            | Short narrative: Founding Engineer shipping production AI systems       | both             | ✅ built | `specs/sections/about.md` |
 | 4   | **Skills (grouped)** | Capabilities by group: RAG, orchestration, eval/observability, routing, MCP, guardrails, AWS, infra | both | ✅ built | `specs/sections/skills.md` |
 | 5   | **Experience**       | Roles & impact, senior framing                                         | recruiters       | ✅ built | `specs/sections/experience.md` |
 | 6   | **Projects (bento)** | Filterable bento grid of weekend builds; the signature section         | both             | ✅ built | `specs/sections/projects.md` |

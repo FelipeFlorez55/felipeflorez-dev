@@ -1,8 +1,8 @@
 # felipeflorez.dev
 
-Personal site + portfolio of **Felipe Florez**, AI Engineer — agent & LLM systems in
-production on AWS (RAG, orchestration, eval/observability, cost-aware model routing,
-MCP, guardrails).
+Personal site + portfolio of **Felipe Florez**, Founding Engineer at **Emilia**. He
+builds production AI products across product engineering, architecture, integrations,
+automation, and infrastructure, with a background in agent & LLM systems on AWS.
 
 The site doubles as a build log: every weekend a new project ships, built with
 **Spec-Driven Development (SDD)**, each with a live demo at a subdomain
